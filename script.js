@@ -66,7 +66,7 @@ function createStyle(style) {
   return styleStr;
 }
 
-let originalText = $("#textContent").text();
+let originalText = $("#text-content").text();
 
 // Xử lý Highlight
 function updateAllHighlights() {
@@ -83,7 +83,7 @@ $("#highlight-btn").click(function () {
     return;
   }
 
-  let content = $("#textContent").text();
+  let content = $("#text-content").text();
   let style = getStyle();
   let styleStr = createStyle(style);
 
@@ -92,7 +92,7 @@ $("#highlight-btn").click(function () {
   content = content.replace(regex, function (match) {
     return `<span class = "highlighted" style="${styleStr}">${match}</span>`;
   });
-  $("#textContent").html(content);
+  $("#text-content").html(content);
 });
 
 // Xử lý delete
@@ -103,9 +103,15 @@ $("#delete-btn").click(function () {
     return;
   }
 
-  let content = $("#textContent").text();
+  let content = $("#text-content").text();
   let regex = new RegExp(pattern, "gi");
   content = content.replace(regex, "");
 
-  $("#textContent").html(content);
+  $("#text-content").html(content);
+});
+
+// Xử lý reset
+$("#reset-btn").click(function () {
+  $("#text-content").text(originalText);
+  $("#input-text").val("");
 });
