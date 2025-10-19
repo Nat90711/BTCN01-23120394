@@ -68,7 +68,14 @@ function createStyle(style) {
 
 let originalText = $("#textContent").text();
 
-// Xử lý Highlight button
+// Xử lý Highlight
+function updateAllHighlights() {
+  let style = getCurrentStyle();
+  let styleStr = createStyleString(style);
+
+  $(".highlighted").attr("style", styleStr);
+}
+
 $("#highlight-btn").click(function () {
   let pattern = $("#input-text").val().trim();
   if (!pattern) {
@@ -76,15 +83,14 @@ $("#highlight-btn").click(function () {
     return;
   }
 
-  let content = $("#textContent").html();
+  let content = $("#textContent").text();
   let style = getStyle();
   let styleStr = createStyle(style);
 
   let regex = new RegExp(pattern, "gi");
 
   content = content.replace(regex, function (match) {
-    return `<span style="${styleStr}">${match}</span>`;
+    return `<span class = "highlighted" style="${styleStr}">${match}</span>`;
   });
-
   $("#textContent").html(content);
 });
