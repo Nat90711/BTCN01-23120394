@@ -22,6 +22,16 @@ $("aside").sortable({
   axis: "y",
 });
 
-$(".setting-text-btn").click(function () {
+// Hiện phần text setting options
+$(".setting-text-btn").click(function (e) {
+  e.stopPropagation();
   $(".text-options").toggleClass("show");
+});
+
+// Ấn ra ngoài để tắt text setting options
+$(document).click(function () {
+  $(".text-options").removeClass("show");
+});
+$(".text-options").click(function (e) {
+  e.stopPropagation();
 });

@@ -192,7 +192,6 @@ button:hover {
 .text-setting-container {
   position: relative;
   display: inline-block;
-  border: 1px solid black;
 }
 
 .setting-text-btn {
