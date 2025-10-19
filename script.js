@@ -20,6 +20,14 @@ $(".toggle-icon").click(function () {
 $("aside").sortable({
   handle: ".drag-icon",
   axis: "y",
+
+  helper: function (e, item) {
+    // Sao chép phần tử gốc
+    var helper = item.clone();
+    // Thêm class làm mờ
+    helper.addClass("is-dragging");
+    return helper;
+  },
 });
 
 // Hiện phần text setting options
@@ -50,16 +58,33 @@ function getStyle() {
 // Hàm tạo style
 function createStyle(style) {
   let styleStr = "";
-  if (style.bold) {
-    styleStr += "font-weight: bold; ";
-  }
-  if (style.italic) {
-    styleStr += "font-style: italic;";
-  }
-  if (style.underline) {
-    styleStr += "text-decoration: underline;";
-  }
-  styleStr += "color: ${style.textColor};";
-  styleStr += "background-color: ${style.bgColor};";
+  if (style.bold) styleStr += "font-weight: bold; ";
+  if (style.italic) styleStr += "font-style: italic; ";
+  if (style.underline) styleStr += "text-decoration: underline; ";
+  styleStr += `color: ${style.textColor}; `;
+  styleStr += `background-color: ${style.bgColor}; `;
   return styleStr;
 }
+
+let originalText = $("#textContent").text();
+
+// Xử lý Highlight button
+$("#highlight-btn").click(function () {
+  let pattern = $("#input-text").val().trim();
+  if (!pattern) {
+    alert("Vui lòng nhập chuỗi mẫu!");
+    return;
+  }
+
+  let content = $("#textContent").html();
+  let style = getStyle();
+  let styleStr = createStyle(style);
+
+  let regex = new RegExp(pattern, "gi");
+
+  content = content.replace(regex, function (match) {
+    return `<span style="${styleStr}">${match}</span>`;
+  });
+
+  $("#textContent").html(content);
+});

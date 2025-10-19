@@ -122,6 +122,10 @@ nav a {
   cursor: ns-resize;
 }
 
+.is-dragging {
+  opacity: 50%;
+}
+
 main {
   margin-left: 10px;
   width: 100%;
