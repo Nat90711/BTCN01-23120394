@@ -94,3 +94,18 @@ $("#highlight-btn").click(function () {
   });
   $("#textContent").html(content);
 });
+
+// Xử lý delete
+$("#delete-btn").click(function () {
+  let pattern = $("#input-text").val().trim();
+  if (!pattern) {
+    alert("Vui lòng nhập chuỗi mẫu!");
+    return;
+  }
+
+  let content = $("#textContent").text();
+  let regex = new RegExp(pattern, "gi");
+  content = content.replace(regex, "");
+
+  $("#textContent").html(content);
+});
