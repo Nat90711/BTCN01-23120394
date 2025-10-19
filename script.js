@@ -35,3 +35,31 @@ $(document).click(function () {
 $(".text-options").click(function (e) {
   e.stopPropagation();
 });
+
+// Hàm lấy style hiện tại
+function getStyle() {
+  return {
+    bold: $("#boldCheck").is(":checked"),
+    italic: $("#italicCheck").is(":checked"),
+    underline: $("#underlineChecked").is(":checked"),
+    textColor: $("#textColor").val(),
+    bgColor: $("#background-color").val(),
+  };
+}
+
+// Hàm tạo style
+function createStyle(style) {
+  let styleStr = "";
+  if (style.bold) {
+    styleStr += "font-weight: bold; ";
+  }
+  if (style.italic) {
+    styleStr += "font-style: italic;";
+  }
+  if (style.underline) {
+    styleStr += "text-decoration: underline;";
+  }
+  styleStr += "color: ${style.textColor};";
+  styleStr += "background-color: ${style.bgColor};";
+  return styleStr;
+}
