@@ -1,3 +1,4 @@
+// Ẩn, hiện nội dung của news
 $(".toggle-icon").click(function () {
   var $icon = $(this);
   var $header = $icon.closest(".new-header");
@@ -13,4 +14,10 @@ $(".toggle-icon").click(function () {
   // Chỉ toggle news được click
   $content.toggle();
   $header.toggleClass("active");
+});
+
+// Kéo thả các news box
+$("aside").sortable({
+  handle: ".drag-icon",
+  axis: "y",
 });
