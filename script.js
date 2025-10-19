@@ -21,3 +21,7 @@ $("aside").sortable({
   handle: ".drag-icon",
   axis: "y",
 });
+
+$(".setting-text-btn").click(function () {
+  $(".text-options").toggleClass("show");
+});

@@ -189,7 +189,14 @@ button:hover {
   margin-right: 15px;
 }
 
+.text-setting-container {
+  position: relative;
+  display: inline-block;
+  border: 1px solid black;
+}
+
 .setting-text-btn {
+  display: inline-block;
   font-size: 16px;
   background-color: #518df7;
   border-radius: 50%;
@@ -199,6 +206,35 @@ button:hover {
 
 .text-options {
   display: none;
+  position: absolute;
+  background-color: #c6def8;
+  border-radius: 5px;
+  width: 10em;
+  padding: 20px 0;
+  left: 50%;
+  margin-top: 10px;
+  margin-left: 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transform: translateX(-50%);
+  color: #000;
+}
+
+.text-options::before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  margin-left: -10px;
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid #c6def8;
+}
+
+.text-options.show {
+  display: flex;
+  flex-direction: column;
 }
 
 .process-text-content {
