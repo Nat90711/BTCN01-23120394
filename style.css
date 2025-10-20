@@ -184,9 +184,9 @@ button:hover {
 }
 
 .sample-text {
-  background-color: white;
   margin-right: 15px;
-  color: black;
+  color: #df4137;
+  background-color: #fcfe58;
 }
 
 #textColor {

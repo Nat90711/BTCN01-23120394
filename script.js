@@ -49,7 +49,7 @@ function getStyle() {
   return {
     bold: $("#boldCheck").is(":checked"),
     italic: $("#italicCheck").is(":checked"),
-    underline: $("#underlineChecked").is(":checked"),
+    underline: $("#underlineCheck").is(":checked"),
     textColor: $("#textColor").val(),
     bgColor: $("#background-color").val(),
   };
@@ -70,8 +70,8 @@ let originalText = $("#text-content").text();
 
 // Xử lý Highlight
 function updateAllHighlights() {
-  let style = getCurrentStyle();
-  let styleStr = createStyleString(style);
+  let style = getStyle();
+  let styleStr = createStyle(style);
 
   $(".highlighted").attr("style", styleStr);
 }
@@ -114,4 +114,22 @@ $("#delete-btn").click(function () {
 $("#reset-btn").click(function () {
   $("#text-content").text(originalText);
   $("#input-text").val("");
+});
+
+// Xử lý Sample Text
+function updateSampleText() {
+  let style = getStyle();
+  let styleStr = createStyle(style);
+  $("#sampleText").attr("style", styleStr);
+}
+
+// Update sample khi thay đổi setting
+$("#boldCheck, #italicCheck, #underlineCheck").change(function () {
+  updateSampleText();
+  updateAllHighlights(); // Cập nhật tất cả highlight
+});
+
+$("#textColor, #background-color").on("input change", function () {
+  updateSampleText();
+  updateAllHighlights(); // Cập nhật tất cả highlight
 });
