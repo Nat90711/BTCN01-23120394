@@ -153,3 +153,19 @@ $(".select-list").on("click", "li", function () {
   $(".select-area").removeClass("show");
   $(".select-list").removeClass("show");
 });
+
+$(document).ready(function () {
+  const MAX_ITEMS = 15;
+  // Xử lý nút Add New
+  $(".add-item-btn").click(function () {
+    const currentCount = $(".item-container .box").length;
+    if (currentCount >= MAX_ITEMS) {
+      return;
+    }
+    const selectedIcon = $(".selected-value").text();
+    const newBox = $("<div></div>");
+    newBox.addClass("box");
+    newBox.text(selectedIcon);
+    $(".item-container").append(newBox);
+  });
+});

@@ -344,5 +344,24 @@ button:hover {
 }
 
 .item-container {
-  padding: 15px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 15px;
+  padding: 20px;
+  min-height: 200px;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  margin-top: 15px;
+}
+
+.box {
+  width: 100%;
+  height: 90px;
+  font-size: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 3px;
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
+  background-image: radial-gradient(circle, #799ee2, #3057a0);
 }
