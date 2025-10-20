@@ -210,7 +210,7 @@ function initDragAndDrop(element) {
       borderRadius: "12px",
       opacity: 0,
       transform: "scale(.95)",
-      transition: "all .25s cubic-bezier(.4,0,.2,1)",
+      transition: "all 0.25s cubic-bezier(.4,0,.2,1)",
     });
 
     const moveAt = (x, y) =>
@@ -248,7 +248,7 @@ function initDragAndDrop(element) {
         });
         this.offsetHeight;
         $(this).css({
-          transition: "transform .35s cubic-bezier(.4,0,.2,1)",
+          transition: "transform 0.35s cubic-bezier(.4,0,.2,1)",
           transform: "translate(0,0)",
         });
       });
