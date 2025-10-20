@@ -312,7 +312,7 @@ button:hover {
   border: 1px solid #ccc;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  position: absolute; /* Định vị ngay dưới nút cha */
+  position: absolute;
   top: 100%;
   left: 0;
   right: 0;
@@ -333,7 +333,7 @@ button:hover {
 
 .select-list li.selected {
   background-color: #4367ca;
-  color: white;
+  color: #f5f5f5;
 }
 
 .select-area.show .dropdown-arrow {
