@@ -134,7 +134,7 @@ main {
 .process-text {
   border: 1px solid rgba(0, 0, 0, 0.5);
   border-radius: 5px;
-  height: 470px;
+  height: 28em;
 }
 
 .process-text-header {
@@ -243,4 +243,85 @@ button:hover {
 .process-text-content {
   font-size: 24px;
   padding: 15px;
+}
+
+.drag-drop {
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  border-radius: 5px;
+  height: 28em;
+  margin-top: 10px;
+}
+
+.drag-drop-header {
+  display: flex;
+  align-items: center;
+  background-image: linear-gradient(to top, #7e89d7, #cad1fb);
+  padding: 10px;
+  height: 40px;
+  color: #f8f9fa;
+}
+
+.drag-drop-title {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.select-icon-container {
+  position: relative;
+  user-select: none;
+  margin-left: 400px;
+}
+
+.select-area {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  background-color: #f8f9fa;
+  height: 30px;
+  border: 1px solid blue;
+  border-radius: 3px;
+}
+
+.selected-value {
+  padding-right: 10px;
+}
+
+.dropdown-arrow {
+  color: #808080;
+  font-size: 1em;
+  padding-left: 10px;
+  border-left: 1px solid #999999;
+}
+
+.add-item-btn {
+  padding: 10px;
+  font-size: 13px;
+  margin-left: 10px;
+}
+
+.select-list {
+  display: block;
+  list-style: none;
+  margin: 5px 0 0 0;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 1px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: absolute; /* Định vị ngay dưới nút cha */
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 10;
+}
+
+.option-icon {
+  padding: 10px;
+}
+
+.select-list li:hover {
+  background-color: #4367ca;
+}
+
+.select-list.show {
+  display: block;
 }
