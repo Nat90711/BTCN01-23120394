@@ -284,13 +284,16 @@ button:hover {
 
 .selected-value {
   padding-right: 10px;
+  border-right: 1px solid #999999;
+  margin-right: 10px;
 }
 
 .dropdown-arrow {
   color: #808080;
   font-size: 1em;
-  padding-left: 10px;
-  border-left: 1px solid #999999;
+  align-items: center;
+  transition: transform 0.3s ease;
+  cursor: pointer;
 }
 
 .add-item-btn {
@@ -300,12 +303,12 @@ button:hover {
 }
 
 .select-list {
-  display: block;
+  display: none;
   list-style: none;
   margin: 5px 0 0 0;
   background-color: #fff;
   border: 1px solid #ccc;
-  border-radius: 1px;
+  border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   position: absolute; /* Định vị ngay dưới nút cha */
   top: 100%;
@@ -314,8 +317,8 @@ button:hover {
   z-index: 10;
 }
 
-.option-icon {
-  padding: 10px;
+.select-list li {
+  padding: 5px 10px;
 }
 
 .select-list li:hover {
@@ -324,4 +327,22 @@ button:hover {
 
 .select-list.show {
   display: block;
+}
+
+.select-list li.selected {
+  background-color: #4367ca;
+  color: white;
+}
+
+.select-area.show .dropdown-arrow {
+  transform: rotate(180deg);
+  color: #5e9145;
+}
+
+.select-area.show {
+  border: 1px solid #5e9145;
+}
+
+.item-container {
+  padding: 15px;
 }

@@ -133,3 +133,23 @@ $("#textColor, #background-color").on("input change", function () {
   updateSampleText();
   updateAllHighlights(); // Cập nhật tất cả highlight
 });
+
+// Xử lý phần dropdown list
+$(".select-area").click(function () {
+  $(".select-area").toggleClass("show");
+  $(".select-list").toggleClass("show");
+});
+
+// Xử lý phần chọn icon
+$(".select-list").on("click", "li", function () {
+  let clickedIcon = $(this);
+  let newIcon = clickedIcon.find(".option-icon").html();
+
+  $(".selected-value").html(newIcon);
+
+  $(".select-list").find("li.selected").removeClass("selected");
+  clickedIcon.addClass("selected");
+
+  $(".select-area").removeClass("show");
+  $(".select-list").removeClass("show");
+});
