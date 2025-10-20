@@ -167,8 +167,194 @@ $(document).ready(function () {
     newBox.addClass("box");
     newBox.text(selectedIcon);
     $(".item-container").append(newBox);
+    initDragAndDrop(newBox);
   });
 });
+
+function initDragAndDrop(element) {
+  $(element).on("mousedown", function (e) {
+    e.preventDefault();
+
+    const $el = $(this);
+    const rect = this.getBoundingClientRect();
+    const shift = { x: e.clientX - rect.left, y: e.clientY - rect.top };
+    const orig = {
+      parent: $el.parent(),
+      next: $el.next(),
+      left: rect.left,
+      top: rect.top,
+    };
+
+    let isDragging = false,
+      currentPos = null;
+
+    const $shadow = $el.clone().css({
+      position: "fixed",
+      zIndex: 1000,
+      left: rect.left,
+      top: rect.top,
+      width: $el.outerWidth(),
+      height: $el.outerHeight(),
+      opacity: 0.9,
+      pointerEvents: "none",
+      boxShadow: "0 12px 24px rgba(0,0,0,.3)",
+      borderRadius: "12px",
+      transition: "box-shadow .2s ease",
+    });
+
+    const $placeholder = $("<div class='placeholder box'></div>").css({
+      background: "transparent",
+      width: $el.outerWidth(),
+      height: $el.outerHeight(),
+      border: "2px dashed #667eea",
+      borderRadius: "12px",
+      opacity: 0,
+      transform: "scale(.95)",
+      transition: "all .25s cubic-bezier(.4,0,.2,1)",
+    });
+
+    const moveAt = (x, y) =>
+      $shadow.css({ left: x - shift.x, top: y - shift.y });
+
+    const savePositions = () => {
+      const map = new Map();
+      $(".item-container .box:not(.placeholder)").each(function () {
+        const r = this.getBoundingClientRect();
+        map.set(this, { left: r.left, top: r.top });
+      });
+      return map;
+    };
+
+    const animateItems = (oldPos) => {
+      const $items = $(".item-container .box:not(.placeholder)");
+      const newRects = new Map();
+
+      $items.each(function () {
+        newRects.set(this, this.getBoundingClientRect());
+      });
+      document.body.offsetHeight; // force reflow
+
+      $items.each(function () {
+        const old = oldPos.get(this),
+          now = newRects.get(this);
+        if (!old || !now) return;
+        const dx = old.left - now.left,
+          dy = old.top - now.top;
+        if (Math.abs(dx) < 0.5 && Math.abs(dy) < 0.5) return;
+
+        $(this).css({
+          transition: "none",
+          transform: `translate(${dx}px,${dy}px)`,
+        });
+        this.offsetHeight;
+        $(this).css({
+          transition: "transform .35s cubic-bezier(.4,0,.2,1)",
+          transform: "translate(0,0)",
+        });
+      });
+
+      setTimeout(() => $items.css({ transition: "", transform: "" }), 400);
+    };
+
+    function onMouseMove(ev) {
+      moveAt(ev.clientX, ev.clientY);
+
+      if (!isDragging) {
+        isDragging = true;
+        $("body").append($shadow);
+        const old = savePositions();
+        $el.after($placeholder).detach();
+        requestAnimationFrame(() => {
+          animateItems(old);
+          $placeholder.css({ opacity: 1, transform: "scale(1)" });
+        });
+      }
+
+      const $targets = $(".item-container .box:not(.placeholder)");
+      if (!$targets.length) return;
+
+      const cursorY = ev.clientY,
+        cursorX = ev.clientX;
+
+      let rowTop = null,
+        rowItems = [],
+        minYDiff = Infinity;
+
+      $targets.each(function () {
+        const rect = this.getBoundingClientRect();
+        const dy = Math.abs(cursorY - rect.top);
+        if (dy < minYDiff - 5) {
+          minYDiff = dy;
+          rowTop = rect.top;
+          rowItems = [{ el: this, rect }];
+        } else if (Math.abs(rect.top - rowTop) < 10) {
+          rowItems.push({ el: this, rect });
+        }
+      });
+
+      if (!rowItems.length) return $(".item-container").append($placeholder);
+
+      let closest = null,
+        minXDiff = Infinity;
+
+      rowItems.forEach(({ el, rect }) => {
+        const centerX = rect.left + rect.width / 2;
+        const dx = Math.abs(cursorX - centerX);
+        if (dx < minXDiff) {
+          minXDiff = dx;
+          closest = $(el);
+        }
+      });
+      if (!closest) return;
+
+      const rect = closest[0].getBoundingClientRect();
+
+      const THRESHOLD = rect.width / 3;
+      let newPos = currentPos;
+
+      if (cursorX < rect.left + rect.width / 2 - THRESHOLD) {
+        newPos = "before-" + rect.left;
+      } else if (cursorX > rect.left + rect.width / 2 + THRESHOLD) {
+        newPos = "after-" + rect.left;
+      } else {
+        return;
+      }
+      if (newPos !== currentPos) {
+        const oldPositions = savePositions();
+        currentPos = newPos;
+
+        if (newPos.startsWith("before")) {
+          closest.before($placeholder);
+        } else {
+          closest.after($placeholder);
+        }
+
+        requestAnimationFrame(() => animateItems(oldPositions));
+      }
+    }
+
+    function onMouseUp() {
+      $(document).off(".drag");
+      if (!isDragging) return $shadow.remove(), $placeholder.remove();
+
+      const phRect = $placeholder[0].getBoundingClientRect();
+      $shadow.css({
+        transition: "all .35s cubic-bezier(.4,0,.2,1)",
+        left: phRect.left,
+        top: phRect.top,
+      });
+
+      setTimeout(() => {
+        $placeholder.replaceWith($el);
+        $shadow.remove();
+        $el.css({ transition: "", transform: "", opacity: "" });
+      }, 350);
+    }
+
+    $(document).on("mousemove.drag", onMouseMove);
+    $(document).on("mouseup.drag", onMouseUp);
+  });
+}
 
 // Xử lý đồng bộ trạng thái menu
 $(".nav-item").click(function (e) {
