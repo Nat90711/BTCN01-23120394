@@ -169,3 +169,11 @@ $(document).ready(function () {
     $(".item-container").append(newBox);
   });
 });
+
+// Xử lý đồng bộ trạng thái menu
+$(".nav-item").click(function (e) {
+  e.preventDefault();
+  var target = $(this).data("target");
+  $(".nav-item").removeClass("active");
+  $('[data-target="' + target + '"]').addClass("active");
+});

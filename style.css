@@ -66,7 +66,8 @@ nav a {
   color: #4e6bd2;
 }
 
-.nav-item.active {
+nav .nav-item.active,
+nav .nav-item:hover {
   color: #edd1b5;
   text-shadow: 0 0 1px rgba(0, 0, 0, 0.5);
 }
@@ -388,15 +389,11 @@ footer {
 
 footer a {
   color: #f0ba55;
+  margin: 0 10px;
 }
 
-footer a.active {
+footer a.active,
+footer a:hover {
   color: #f8e3b6;
   background-color: #f0ba55;
-}
-
-footer .nav-item + .nav-item::before {
-  content: "|";
-  margin: 0 10px;
-  color: #f0ba55;
 }
